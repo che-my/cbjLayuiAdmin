@@ -35,7 +35,7 @@ class Admin extends Adminbase
     }
 
     public function add(){
-        echo 'add';
+        return $this->view->fetch();
     }
 
     public function edit(){
