@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layuiAdmin std - 通用后台管理模板系统（iframe标准版）</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__STATIC__/assets/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__STATIC__/assets/layuiadmin/style/admin.css" media="all">
+
+</head>
+<body class="layui-layout-body">
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <!-- 头部 -->
+        {include file="public/header" /}
+        <!-- 头部 -->
+        <!-- 菜单 -->
+        {include file="public/menu" /}
+        <!-- 菜单 -->
+        <!-- 顶部标签栏 -->
+        {include file="public/tabs" /}
+        <!-- 顶部标签栏 -->
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body">
+            <div class="layadmin-tabsbody-item layui-show">
+                {__CONTENT__}
+            </div>
+        </div>    
+        <!-- 主体内容 -->
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <!-- 尾部 -->
+        {include file="public/footer" /}
+        <!-- 尾部 -->
+    </div>
+</div>
+</body>
+<script src="__STATIC__/assets/layuiadmin/layui/layui.js"></script>
+<script>
+layui.config({
+  base: '__STATIC__/assets/layuiadmin/' //静态资源所在路径
+}).extend({
+  index: 'lib/index' //主入口模块
+}).use('index', 'console');
+</script> 
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>
+
+  
