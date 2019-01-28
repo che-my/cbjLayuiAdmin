@@ -24,11 +24,12 @@ class Rule extends Adminbase
         parent::initialize();
         $this->model = model('AuthRule');
         // 必须将结果集转换为数组
-        $ruleList = $this->model->order('weigh', 'desc')->select()->toArray();
+        $ruleList = $this->model->withAttr("pid", function ($value, $data) {
+            return $value == 0 ? -1 : $value;
+        })->order('weigh', 'desc')->select()->toArray();
         // foreach ($ruleList as $k => &$v)
         // {
-        //     $v['title'] = __($v['title']);
-        //     $v['remark'] = __($v['remark']);
+            
         // }
         // unset($v);
         Tree::instance()->init($ruleList);
@@ -40,7 +41,6 @@ class Rule extends Adminbase
                 continue;
             $ruledata[$v['id']] = $v['title'];
         }
-        dump($ruledata);
         $this->view->assign('ruledata', $ruledata);
     }
 
@@ -52,10 +52,13 @@ class Rule extends Adminbase
         if ($this->request->isAjax())
         {
             $list = $this->rulelist;
+            foreach($list as $k=>$v){
+                if($v['pid']=='0'){
+                  $list[$k]['pid'] = -1;
+                } 
+            }
             $total = count($this->rulelist);
-
-            $result = array("total" => $total, "rows" => $list);
-
+            $result = array("count" => $total,'code'=>0, 'msg'=>'ok',"data" => $list);
             return json($result);
         }
         return $this->view->fetch();

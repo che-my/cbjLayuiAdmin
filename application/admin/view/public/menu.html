@@ -7,7 +7,7 @@
         
         <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
             <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                <a href="{:url('index/index')}" lay-tips="控制台">
+                <a lay-href="{:url('index/index')}" lay-tips="控制台">
                 <i class="layui-icon layui-icon-home"></i>
                 <cite>控制台</cite>
                 </a>
@@ -22,6 +22,14 @@
                         <a lay-href="{:url('admin/index')}">
                             <i class="layui-icon layui-icon-component"></i>
                             管理员管理
+                        </a>
+                    </dd>
+                </dl>
+                <dl class="layui-nav-child">
+                    <dd data-name="grid">
+                        <a lay-href="{:url('rule/index')}">
+                            <i class="layui-icon layui-icon-component"></i>
+                            菜单规则
                         </a>
                     </dd>
                 </dl>

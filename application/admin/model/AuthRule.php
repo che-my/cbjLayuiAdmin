@@ -19,4 +19,9 @@ class AuthRule extends Model
             Cache::rm('__menu__');
         });
     }
+
+    public function setPidAttr($value)
+    {
+        return $value=='0'?-1:$value;
+    }
 }
