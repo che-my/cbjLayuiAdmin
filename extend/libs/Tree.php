@@ -2,7 +2,7 @@
 
 namespace libs;
 
-use think\Config;
+use think\facade\Config;
 
 /**
  * 通用的树型类

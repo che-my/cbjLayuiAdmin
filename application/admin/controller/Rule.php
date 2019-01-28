@@ -1,10 +1,10 @@
 <?php
 
-namespace app\admin\controller\auth;
+namespace app\admin\controller;
 
 use app\common\controller\Adminbase;
 use libs\Tree;
-use think\Cache;
+use think\facade\Cache;
 
 /**
  * 规则管理
@@ -24,7 +24,7 @@ class Rule extends Adminbase
         parent::initialize();
         $this->model = model('AuthRule');
         // 必须将结果集转换为数组
-        $ruleList = collection($this->model->order('weigh', 'desc')->select())->toArray();
+        $ruleList = $this->model->order('weigh', 'desc')->select()->toArray();
         // foreach ($ruleList as $k => &$v)
         // {
         //     $v['title'] = __($v['title']);
@@ -33,7 +33,7 @@ class Rule extends Adminbase
         // unset($v);
         Tree::instance()->init($ruleList);
         $this->rulelist = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0), 'title');
-        $ruledata = [0 => __('None')];
+        $ruledata = [0 => '无'];
         foreach ($this->rulelist as $k => &$v)
         {
             if (!$v['ismenu'])
