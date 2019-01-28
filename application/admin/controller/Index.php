@@ -8,4 +8,9 @@ class Index extends Controller
     {
         return $this->view->fetch();
     }
+
+    public function home()
+    {
+        return $this->view->fetch();
+    }
 }
