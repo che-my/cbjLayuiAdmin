@@ -16,12 +16,8 @@ class AuthRule extends Model
     protected static function init()
     {
         self::afterWrite(function ($row) {
-            Cache::rm('__menu__');
+
         });
     }
 
-    public function setPidAttr($value)
-    {
-        return $value=='0'?-1:$value;
-    }
 }

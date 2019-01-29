@@ -5,6 +5,8 @@ namespace app\admin\controller;
 use app\common\controller\Adminbase;
 use libs\Tree;
 use think\facade\Cache;
+use think\Db;
+use app\admin\validate\AuthRule;
 
 /**
  * 规则管理
@@ -41,6 +43,8 @@ class Rule extends Adminbase
                 continue;
             $ruledata[$v['id']] = $v['title'];
         }
+        $icons = Db::name('icons')->select();
+        $this->assign("icons", $icons);
         $this->view->assign('ruledata', $ruledata);
     }
 
@@ -71,19 +75,18 @@ class Rule extends Adminbase
     {
         if ($this->request->isPost())
         {
-            $params = $this->request->post("row/a", [], 'strip_tags');
+            $params = $this->request->post("row/a");
             if ($params)
             {
                 if (!$params['ismenu'] && !$params['pid'])
                 {
-                    $this->error(__('The non-menu rule must have parent'));
+                    $this->error();
                 }
                 $result = $this->model->validate()->save($params);
                 if ($result === FALSE)
                 {
                     $this->error($this->model->getError());
                 }
-                Cache::rm('__menu__');
                 $this->success();
             }
             $this->error();
@@ -94,34 +97,35 @@ class Rule extends Adminbase
     /**
      * 编辑
      */
-    public function edit($ids = NULL)
+    public function edit()
     {
-        $row = $this->model->get(['id' => $ids]);
-        if (!$row)
-            $this->error(__('No Results were found'));
+        $id = $this->request->get('id/d');
+        $row = $this->model->get(['id' => $id]);
+        !$row ? $this->error("暂无该条数据!") : '' ;
         if ($this->request->isPost())
         {
-            $params = $this->request->post("row/a", [], 'strip_tags');
+            $params = $this->request->post("row/a");
             if ($params)
             {
                 if (!$params['ismenu'] && !$params['pid'])
                 {
-                    $this->error(__('The non-menu rule must have parent'));
+                    $this->error('非菜单规则节点必须有父级');
                 }
                 //这里需要针对name做唯一验证
-                $ruleValidate = \think\Loader::validate('AuthRule');
-                $ruleValidate->rule([
+                $ruleValidate = new AuthRule();
+                $result = $ruleValidate->check([
                     'name' => 'require|format|unique:AuthRule,name,' . $row->id,
                 ]);
-                $result = $row->validate()->save($params);
-                if ($result === FALSE)
-                {
+                $res = $row->save($params);
+                if ($result === false||!$res) {
                     $this->error($row->getError());
                 }
-                Cache::rm('__menu__');
-                $this->success();
+                $result = array('code'=>0, 'msg'=>'更新成功',"data" => '','url'=>'');
+                return json($result);
+            }else{
+                $result = array('code'=>0, 'msg'=>'更新失败',"data" => '','url'=>'');
+                return json($result);
             }
-            $this->error();
         }
         $this->view->assign("row", $row);
         return $this->view->fetch();
@@ -143,7 +147,6 @@ class Rule extends Adminbase
             $count = $this->model->where('id', 'in', $delIds)->delete();
             if ($count)
             {
-                Cache::rm('__menu__');
                 $this->success();
             }
         }

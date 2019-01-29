@@ -3,7 +3,7 @@
 {block name="main"}
 <div class="layui-card-header">添加管理员</div>
     <div class="layui-card-body" style="padding: 15px;">
-        <form class="layui-form" lay-filter="component-form-group">
+        <form class="layui-form form-horizontal" lay-filter="component-form-group" action="{:url('admin/add')}" >
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">账号</label>
@@ -57,7 +57,7 @@
             <div class="layui-form-item layui-layout-admin">
                 <div class="layui-input-block">
                     <div class="layui-footer" style="left: 0;">
-                        <button class="layui-btn" lay-submit="" lay-filter="admin_add">立即提交</button>
+                        <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                         <button type="button" class="layui-btn layui-btn-danger" onclick="JavaScript:history.back(-1)">返回</button>
                     </div>

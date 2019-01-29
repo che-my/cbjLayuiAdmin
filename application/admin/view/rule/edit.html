@@ -1,0 +1,104 @@
+{__NOLAYOUT__}
+{extend name="layout/default" /}
+{block name="style"}
+<style>
+#icons-selector{position: relative;height:34px;line-height:34px;border:1px solid #ddd;padding:0 4px}
+</style>
+{/block}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">添加菜单</div>
+    <div class="layui-card-body" data-action='add'>
+        <form class="layui-form form-horizontal" method="post">
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否菜单</label>
+				<div class="layui-input-inline">
+					<input type="checkbox" name="row[ismenu]" lay-skin="switch" lay-text="是|否" value="1" {in name="1" value="$row.ismenu"}checked{/in}>
+				</div>
+			</div>
+            <div class="layui-form-item">
+				<label class="layui-form-label">父级</label>
+				<div class="layui-input-inline">
+					<select name="row[pid]">
+						{foreach name="ruledata" item="vo" key="k"}
+						<option value="{$k}" {in name="$k" value="$row.pid"}selected{/in}>{$vo|raw}</option>
+						{/foreach}
+					</select>
+				</div>
+			</div>
+            <div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">icon图标 </label>
+					<div class="layui-input-inline">
+						<input type="hidden" id="icon" name="row[icon]" value="{$row.icon}" />
+						<div class="icons-selector fip-bootstrap" id="icons-selector">
+							<div class="selector1">
+								<span class="icons1" id="icons1"><i class="{$row.icon}"></i></span>
+								<span class="icons2" id="icons2" data='1'><i class="fip-icon-down-dir"></i></span>
+							</div>
+							<div class="icons-selector fip-bootstrap" style="position: relative;top:-10px">
+								<div class="selector-popup" style="width:870px;display:none">
+									<div class="fip-icons-container">
+										{foreach name="icons" item="vo"}
+										<span class="fip-box" title="{$vo.name}" onclick="funclick(this)"><i class="layui-icon {$vo.icon}" ></i></span>
+										{/foreach}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">规则名称 </label>
+				<div class="layui-input-inline">
+					<input type="text" name="row[title]" value="{$row.title}" autocomplete="off" placeholder="规则名称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">规则 </label>
+				<div class="layui-input-inline">
+					<input type="text" name="row[name]" value="{$row.name}" autocomplete="off" placeholder="规则" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">规则条件 </label>
+				<div class="layui-input-inline">
+					<textarea name="row[condition]" placeholder="请输入规则条件" class="layui-textarea">{$row.condition}</textarea>
+				</div>
+			</div>
+		    <div class="layui-form-item">
+				<label class="layui-form-label">备注 </label>
+				<div class="layui-input-inline">
+					<textarea name="row[remark]" placeholder="请输入备注" class="layui-textarea">{$row.remark}</textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">排序 </label>
+				<div class="layui-input-inline">
+					<input type="number" name="row[weigh]" value="{$row.weigh}" min='0' autocomplete="off" placeholder="排序" class="layui-input">
+				</div>
+			</div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否隐藏</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="row[status]" lay-skin="switch" lay-text="否|是" value="1" {in name="1" value="$row.status"}checked{/in}>
+                </div>
+            </div>
+            <div class="layui-form-item layui-layout-admin">
+                <div class="layui-input-block">
+                    <div class="layui-footer" style="left: 0;">
+                        <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        <button type="button" class="layui-btn layui-btn-danger" onclick="JavaScript:history.back(-1)">返回</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="cover"></div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/assets/adminbase/{$controllername}.js"></script>
+{/block}
