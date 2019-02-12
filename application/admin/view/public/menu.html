@@ -6,7 +6,7 @@
         </div>
         
         <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-            <li data-name="home" class="layui-nav-item layui-nav-itemed">
+             <!-- <li data-name="home" class="layui-nav-item layui-nav-itemed">
                 <a lay-href="{:url('index/index')}" lay-tips="控制台">
                 <i class="layui-icon layui-icon-home"></i>
                 <cite>控制台</cite>
@@ -34,7 +34,7 @@
                     </dd>
                 </dl>
             </li>
-            <li data-name="template" class="layui-nav-item">
+           <li data-name="template" class="layui-nav-item">
                 <a href="javascript:;" lay-tips="页面" lay-direction="2">
                 <i class="layui-icon layui-icon-template"></i>
                 <cite>页面</cite>
@@ -149,7 +149,8 @@
                 <i class="layui-icon layui-icon-auz"></i>
                 <cite>授权</cite>
                 </a>
-            </li>
+            </li> -->
+            {:$menulist}
         </ul>
     </div>
 </div>

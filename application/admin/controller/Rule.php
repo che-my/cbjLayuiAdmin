@@ -82,14 +82,18 @@ class Rule extends Adminbase
                 {
                     $this->error();
                 }
-                $result = $this->model->validate()->save($params);
-                if ($result === FALSE)
-                {
-                    $this->error($this->model->getError());
+                //这里需要针对name做唯一验证
+                $ruleValidate = new AuthRule();
+                $result = $ruleValidate->check($params);
+                $res = $this->model->save($params);
+                if ($result === false||!$res) {
+                    $this->error($ruleValidate->getError());
                 }
-                $this->success();
+                $result = array('code'=>1, 'msg'=>'添加成功',"data" => '','url'=>'');
+                return json($result);
             }
-            $this->error();
+            $result = array('code'=>0, 'msg'=>'添加失败',"data" => '','url'=>'');
+            return json($result);
         }
         return $this->view->fetch();
     }
@@ -113,14 +117,19 @@ class Rule extends Adminbase
                 }
                 //这里需要针对name做唯一验证
                 $ruleValidate = new AuthRule();
-                $result = $ruleValidate->check([
-                    'name' => 'require|format|unique:AuthRule,name,' . $row->id,
-                ]);
-                $res = $row->save($params);
-                if ($result === false||!$res) {
-                    $this->error($row->getError());
+                $result = $ruleValidate->check($params);
+                if ($result === false) {
+                    $this->error($ruleValidate->getError());
                 }
-                $result = array('code'=>0, 'msg'=>'更新成功',"data" => '','url'=>'');
+                $res = $row->save($params);
+                if (!$res) {
+                    $msg = '更新失败';
+                    $code = 0;
+                }else{
+                    $msg = '更新成功';
+                    $code = 1;
+                }
+                $result = array('code'=>$code, 'msg'=>$msg,"data" => '','url'=>url('rule/index'));
                 return json($result);
             }else{
                 $result = array('code'=>0, 'msg'=>'更新失败',"data" => '','url'=>'');

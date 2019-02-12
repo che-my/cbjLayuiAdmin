@@ -123,6 +123,7 @@ layui.use(['element', 'layer', 'form'], function() {
 
 
       $.post(target, query).success(function(data) {
+          console.log(data);
           if (data.code == 1) {
               if (data.url) {
                   layer.msg(data.msg + ' 页面即将自动跳转~');

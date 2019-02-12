@@ -24,6 +24,7 @@ class AuthRule extends Validate
      * 提示消息
      */
     protected $message = [
+        'name.require' => 'URL规则不能为空',
         'name.format' => 'URL规则只能是小写字母、数字、下划线和/组成'
     ];
 
@@ -37,6 +38,7 @@ class AuthRule extends Validate
      * 验证场景
      */
     protected $scene = [
+        'add'  =>  ['name','title'],
     ];
 
     public function __construct(array $rules = [], $message = [], $field = [])

@@ -15,9 +15,9 @@
 namespace libs;
 
 use think\Db;
-use think\Config;
-use think\Session;
-use think\Request;
+use think\facade\Config;
+use think\facade\Session;
+use think\facade\Request;
 
 /**
  * 权限认证类
