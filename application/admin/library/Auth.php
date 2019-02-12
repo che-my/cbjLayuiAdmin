@@ -43,7 +43,7 @@ class Auth extends \libs\Auth
             $this->setError('Username is incorrect');
             return false;
         }
-        if ($admin['status'] == 'hidden') {
+        if ($admin['status'] == 0) {
             $this->setError('Admin is forbidden');
             return false;
         }
@@ -260,7 +260,7 @@ class Auth extends \libs\Auth
             $groupIds[] = $v['id'];
         }
         // 取出所有分组
-        $groupList = \app\admin\model\AuthGroup::where(['status' => 'normal'])->select();
+        $groupList = \app\admin\model\AuthGroup::where(['status' => 1])->select();
         $objList = [];
         foreach ($groups as $K => $v) {
             if ($v['rules'] === '*') {
@@ -374,7 +374,7 @@ class Auth extends \libs\Auth
         $refererUrl = Session::get('referer');
         $pinyin = new \Overtrue\Pinyin\Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
         // 必须将结果集转换为数组
-        $ruleList = \app\admin\model\AuthRule::where('status', 'normal')->where('ismenu', 1)->order('weigh', 'desc')->cache("__menu__")->select()->toArray();
+        $ruleList = \app\admin\model\AuthRule::where('status', 1)->where('ismenu', 1)->order('weigh', 'desc')->cache("__menu__")->select()->toArray();
         // dump($ruleList);
         // dump($userRule);
         // die;

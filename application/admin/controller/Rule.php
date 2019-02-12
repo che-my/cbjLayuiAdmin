@@ -116,11 +116,11 @@ class Rule extends Adminbase
                     $this->error('非菜单规则节点必须有父级');
                 }
                 //这里需要针对name做唯一验证
-                $ruleValidate = new AuthRule();
-                $result = $ruleValidate->check($params);
-                if ($result === false) {
-                    $this->error($ruleValidate->getError());
-                }
+                // $ruleValidate = new AuthRule();
+                // $result = $ruleValidate->check($params);
+                // if ($result === false) {
+                //     $this->error($ruleValidate->getError());
+                // }
                 $res = $row->save($params);
                 if (!$res) {
                     $msg = '更新失败';

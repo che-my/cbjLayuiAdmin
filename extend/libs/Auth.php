@@ -177,7 +177,7 @@ class Auth
                 ->alias('aga')
                 ->join('__' . strtoupper($this->config['auth_group']) . '__ ag', 'aga.group_id = ag.id', 'LEFT')
                 ->field('aga.uid,aga.group_id,ag.id,ag.pid,ag.name,ag.rules')
-                ->where("aga.uid='{$uid}' and ag.status='normal'")
+                ->where("aga.uid='{$uid}' and ag.status=1")
                 ->select();
         $groups[$uid] = $user_groups ?: [];
         return $groups[$uid];
@@ -209,9 +209,7 @@ class Auth
         }
 
         // 筛选条件
-        $where = [
-            'status' => 'normal'
-        ];
+        $where['status'] = 1;
         if (!in_array('*', $ids))
         {
             $where['id'] = ['in', $ids];
