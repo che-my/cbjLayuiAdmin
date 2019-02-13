@@ -111,9 +111,11 @@ class Rule extends Adminbase
             $params = $this->request->post("row/a");
             if ($params)
             {
-                if (!$params['ismenu'] && !$params['pid'])
+                if (!isset($params['ismenu']) && !$params['pid'])
                 {
                     $this->error('非菜单规则节点必须有父级');
+                }elseif(!isset($params['ismenu'])){
+                    $params['ismenu'] = 0;
                 }
                 //这里需要针对name做唯一验证
                 // $ruleValidate = new AuthRule();
